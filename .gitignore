@@ -2,3 +2,6 @@ chissoku
 chissoku.exe
 release/
 *.xml
+
+/compose.yaml
+/docker-compose.yaml
