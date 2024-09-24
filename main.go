@@ -19,7 +19,6 @@ import (
 
 	"github.com/alecthomas/kong"
 	"go.bug.st/serial"
-	"go.bug.st/serial/enumerator"
 
 	"github.com/northeye/chissoku/options"
 	"github.com/northeye/chissoku/output"
@@ -135,40 +134,19 @@ const (
 	ResponseNG string = `NG`
 )
 
-func (c *Chissoku) findUDCO2S() (port string, err error) {
-	ports, err :=enumerator.GetDetailedPortsList()
-	if err != nil {
-		slog.Error("Getting serial ports", "error", err)
-		return "", err
-	}
-
-	for _, port := range ports {
-		if port.IsUSB && port.PID == "E95A" && port.VID == "04D8" {
-			slog.Debug("Found UD-CO2S", "port", port)
-			return port.Name, nil
-		}
-	}
-	return "", fmt.Errorf("UD-CO2S not found")
-}
-
 // Run run the program
 func (c *Chissoku) Run() (err error) {
 	slog.Debug("Start", "name", ProgramName, "version", Version)
 
-	port, err := c.findUDCO2S()
-	if err != nil {
-		slog.Error("Finding UD-CO2S", "error", err)
-		return err
-	}
-	slog.Info("Found UD-CO2S", "port", port)
+	opts := &c.Options
 
-	if c.port, err = serial.Open(port, &serial.Mode{
+	if c.port, err = serial.Open(opts.Device, &serial.Mode{
 		BaudRate: 115200,
 		DataBits: 8,
 		StopBits: serial.OneStopBit,
 		Parity:   serial.NoParity,
 	}); err != nil {
-		slog.Error("Opening serial", "error", err, "device", port)
+		slog.Error("Opening serial", "error", err, "device", opts.Device)
 		return err
 	}
 	c.port.SetReadTimeout(time.Second * 10)

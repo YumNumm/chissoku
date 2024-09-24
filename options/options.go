@@ -7,6 +7,8 @@ import (
 
 // Options command line options
 type Options struct {
+	// The serial device
+	Device string `arg:"" help:"specify the serial device like '/dev/ttyACM0'"`
 	// Output
 	Output []string `short:"o" enum:"${outputters}" help:"at least one output must be specified (available: ${enum})" default:"stdout"`
 	// Quiet
