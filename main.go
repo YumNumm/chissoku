@@ -48,6 +48,8 @@ type Chissoku struct {
 	output.Stdout `prefix:"stdout." group:"Stdout Output:"`
 	// MQTT output
 	output.Mqtt `prefix:"mqtt." group:"MQTT Output:"`
+	// Prometheus output
+	output.Prometheus `prefix:"prometheus." group:"Prometheus Output:"`
 
 	// available outputters
 	outputters map[string]output.Outputter
