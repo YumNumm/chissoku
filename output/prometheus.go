@@ -17,9 +17,9 @@ import (
 type Prometheus struct {
 	Port int `long:"port" help:"port number for prometheus. default: '9090'" default:"9090"`
 
-	current *types.Data
+	Interval int `long:"interval" help:"interval (second) for update metrics. default: '60'" default:"60"`
 
-	cancel func()
+	current *types.Data
 }
 
 var (

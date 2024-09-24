@@ -103,6 +103,15 @@ outputter のオプションは基本的に outputter の名前がプレフィ�
 
 MQTT メソッドがうまく動かなければ標準出力を [mosquitto_pub](https://mosquitto.org/man/mosquitto_pub-1.html) などに渡せばうまくいくかもしれません。
 
+### Prometheus Exporter
+
+コマンドラインオプションの `--output=prometheus` により Prometheus エンドポイントを公開します。
+
+|オプション|意味|
+|----|----|
+|--prometheus.interval=`INT`|データを出力する間隔(秒)(`default: 60`)|
+|--prometheus.port=`INT`|Prometheus メトリクスのポート(例: `9090`)(`default: 9090`)|
+
 ## Global options
 
 |オプション|意味|
